@@ -6,6 +6,7 @@ Team mebers:-
 
 2. Sandesh Shetty
 
+
 • Implemented routines that will allow a program to run, with multiple threads, using NON-preemptive scheduling on most Unix/Linux operating systems.
 
 • Extending above mentioned project,implemented routines that implements semaphores and then use them to implement the readers/writers problem.
