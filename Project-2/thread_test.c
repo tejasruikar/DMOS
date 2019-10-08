@@ -49,10 +49,11 @@ void fun3()
 }
 
 
-int main(int argc, char *argv)
+int main()
 {
     start_thread(fun1);
     start_thread(fun2);
     start_thread(fun3);	
     run();
+    return 0;
 }
