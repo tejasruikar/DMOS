@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include "sem.h"
-
 #define N 10
-
-
 struct port{
 	Semaphore_t* mutex;
 	Semaphore_t* full;
@@ -12,8 +9,6 @@ struct port{
 	int out;
 	int messages[N][N];
 }p[100];
-
-
 
 void initPort(){
 	int i;
@@ -25,9 +20,7 @@ void initPort(){
 		p[i].out = 0;
 	}
 }
-
-
-int send(int portNo, int buffer[]){ // write equivalent to port
+int send(int portNo, int buffer[]){
 	P(p[portNo].empty);
           P(p[portNo].mutex);
           memcpy(p[portNo].messages[p[portNo].in], buffer, N*sizeof(int));
@@ -36,10 +29,7 @@ int send(int portNo, int buffer[]){ // write equivalent to port
 	V(p[portNo].full);
 	return 0;
 }
-
-
-
-int receive(int portNo, int buffer[]){ // read equivalent from port
+int receive(int portNo, int buffer[]){
 	P(p[portNo].full);
           P(p[portNo].mutex);
 		  memcpy(buffer, p[portNo].messages[p[portNo].out], N*sizeof(int));
@@ -48,4 +38,3 @@ int receive(int portNo, int buffer[]){ // read equivalent from port
 	V(p[portNo].empty);
 	return 0;
 }
-
