@@ -1,13 +1,10 @@
 #include "msgs.h"
-
-
-static int port = 0; // port number assignment to servers & clients starting from 0
+static int port = 0;
 Semaphore_t *mutex;
-static int servers = 0; // no of servers
-static int clients = 0; // no of clients
+static int servers = 0;
+static int clients = 0;
 int serverPorts[99]={0};
 time_t t;
-
 void server ()
 {
 	int count = 0;
@@ -16,13 +13,11 @@ void server ()
 	int bufferS[10] = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
 	int obtainedS[10];
 	int serverNo;
-
 	P(mutex);
 		portNo = port++;
 		serverPorts[servers] = portNo;
 		serverNo = servers++;
 	V(mutex);
-    
 	while(1){
 		if(portNo > 99){
 			printf("(Server) Ports not available...closing!\n");
@@ -56,7 +51,6 @@ void client ()
 	int serverPortNo = serverPorts[rand() % servers];
 	int bufferC[10] = {41, 42, 43, 44, 45, 46, 47, 48, 49, 50};
 	int obtainedC[10];
-
 	P(mutex);
 		portNo = port++;
 		clientNo = clients++;
@@ -68,15 +62,13 @@ void client ()
 			break;
 		}
 		printf("\n\n");
-		bufferC[0] = portNo; // replyTo port no to be sent to server
-		send(serverPortNo, bufferC); // Client sends 1st integer as port no and the rest data in bufferC.
+		bufferC[0] = portNo;
+		send(serverPortNo, bufferC);
 		while(count < 10){
 			++bufferC[count];
 			++count;		
 		}
 		sleep(1);
-		
-
 		receive(portNo, obtainedC);
 		count = 0;
 		while(count < 10){
@@ -94,10 +86,9 @@ int main(){
 	mutex = CreateSem(1);
 	start_thread(server);
 	start_thread(server);
-    start_thread(client);
+    	start_thread(client);
 	start_thread(client);
 	start_thread(client);
-    
    	run();
 	while(1){
 		sleep(1);
