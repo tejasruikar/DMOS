@@ -1,9 +1,6 @@
 # Distributed Multiprocessor Operating Systems
 
-Team mebers:-
-
-1. Saurabh Jagdhane
-2. Sandesh Shetty
+Team mebers:
 
 
 • Implemented routines that will allow a program to run, with multiple threads, using NON-preemptive scheduling on most Unix/Linux operating systems.
